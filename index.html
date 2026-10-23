@@ -1,42 +1,55 @@
 <!DOCTYPE html>
 <html lang="id"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Lab Pseudocode</title>
+<title>Deli Pseudocode</title>
 <style>
-:root{--bg:#eef1f7;--card:#fff;--tx:#1b2033;--mu:#6a7089;--bd:#d5daea;--ac:#4251c9;--on:#fff;--gut:#f3f5fb;--tbg:#101431;--ttx:#dfe4ff;--er:#ff7b8f;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0f1a;--card:#151829;--tx:#e6e9f7;--mu:#8f95b5;--bd:#2a2f4a;--ac:#8b97ff;--on:#0d0f1a;--gut:#11142200;--tbg:#080a14;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d0f1a;--card:#151829;--tx:#e6e9f7;--mu:#8f95b5;--bd:#2a2f4a;--ac:#8b97ff;--on:#0d0f1a;--gut:#11142200;--tbg:#080a14;color-scheme:dark}
+:root{--bg:#fff;--card:#fff;--tx:#222;--mu:#777;--bd:#ddd;--ac:#b81632;--on:#fff;--hd:#b81632;--hl:#fde2e7;--gut:#f6f6f6;--tbg:#fff;--ttx:#222;--er:#b81632;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+
+
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
-header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:14px 18px}
-h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.01em;margin-right:auto}
+header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:calc(10px + env(safe-area-inset-top,0px)) 24px 10px;background:var(--hd);color:#fff}
+.loc{background:#9e1129;color:#ffc2cc;font-weight:700;padding:6px 24px}
+.shell{display:flex;min-height:calc(100vh - 90px)}
+nav{width:250px;flex:none;background:#393939}
+nav button{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid #3b3b3b;border-radius:0;background:#555;color:#fff;font-weight:700;padding:15px 20px 15px 37px}
+nav button:hover{background:#646464}nav button.on{background:var(--hd)}
+.ct{flex:1;min-width:0;background:#fff}
+.tg{display:block;width:0;height:0;margin:10px 0 0 8px;padding:0;background:none;border:0;border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:14px solid #000;border-radius:0}
+body.cl nav{display:none}body.cl .tg{border-right:0;border-left:14px solid #000}
+h1{font-size:23px;margin:0 auto 0 0;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:.01em}
 select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:6px 12px;cursor:pointer}
 button.go{background:var(--ac);color:var(--on);border-color:var(--ac);font-weight:600}
+header button.go{background:#fff;color:var(--hd);border-color:#fff}
 button:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-main{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:0 18px 12px}
-@media(max-width:820px){main{grid-template-columns:1fr}}
+main{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:18px 18px 12px}
+@media(max-width:820px){main{grid-template-columns:1fr}.shell{flex-direction:column}nav{width:100%}}
 h2{font-size:13px;margin:0 0 6px;color:var(--mu);font-weight:600}
 .ed{display:flex;height:360px;border:1px solid var(--bd);border-radius:8px;overflow:hidden;background:var(--card)}
 #gut{width:42px;padding:10px 6px 10px 0;text-align:right;background:var(--gut);color:var(--mu);font:13px/20px var(--mono);overflow:hidden;user-select:none;border-right:1px solid var(--bd)}
-#gut .e{background:var(--er);color:#2a0a10}
+#gut .h{background:var(--hl);color:var(--tx)}#gut .e{background:var(--er);color:#fff}
 textarea{font:13px/20px var(--mono);color:var(--tx);background:transparent;border:0;resize:none;white-space:pre;tab-size:2}
 #src{flex:1;padding:10px;overflow:auto}
 #inp{width:100%;height:64px;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--card);white-space:pre-wrap}
 .tabs{display:flex;gap:6px;margin-bottom:6px;align-items:center}
 .tabs button[aria-selected=true]{background:var(--ac);color:var(--on);border-color:var(--ac)}
 .tabs .cp{margin-left:auto}
-pre.out{margin:0;height:432px;overflow:auto;padding:12px 14px;border-radius:8px;background:var(--tbg);color:var(--ttx);font:13px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word}
+pre.out{margin:0;border:1px solid var(--bd);height:432px;overflow:auto;padding:12px 14px;border-radius:8px;background:var(--tbg);color:var(--ttx);font:13px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word}
 pre.out[hidden]{display:none}
 .d{opacity:.55}.er{color:var(--er)}
+.ls{display:block;margin-top:7px;font-weight:600;cursor:pointer}.ls b{color:var(--ac)}.ls i{color:var(--mu);font-style:normal;font-weight:400;margin:0 6px}
+.lr{display:block;cursor:pointer;border-left:2px solid var(--bd);padding-left:8px;margin-top:1px}.le{display:block;color:var(--er);font-weight:700;margin-top:7px}
 details{margin:0 18px 18px;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:10px 14px}
 summary{cursor:pointer;font-weight:600}
 details pre{margin:10px 0 0;font:12.5px/1.6 var(--mono);white-space:pre-wrap;overflow:auto}
 .note{margin:0 18px 8px;color:var(--mu);font-size:12.5px}
 </style></head><body>
 <header>
-<h1>Lab Pseudocode</h1>
-<select id="sel" aria-label="Contoh program"></select>
+<h1>Deli Pseudocode</h1>
+<select id="sel" hidden></select>
 <button class="go" id="run">Jalankan (Ctrl+Enter)</button>
 </header>
+<div class="loc">Lokasi : Deli Pseudocode &gt;&gt; <span id="loc">Editor</span></div>
+<div class="shell"><nav id="nav" aria-label="Contoh program"></nav><div class="ct"><button class="tg" id="tg" aria-label="Tampilkan atau sembunyikan menu"></button>
 <main>
 <section>
 <h2>Editor</h2>
@@ -47,16 +60,18 @@ details pre{margin:10px 0 0;font:12.5px/1.6 var(--mono);white-space:pre-wrap;ove
 <section>
 <div class="tabs" role="tablist">
 <button role="tab" aria-selected="true" data-p="term">Terminal</button>
+<button role="tab" aria-selected="false" data-p="trc">Proses</button>
 <button role="tab" aria-selected="false" data-p="pyo">Python</button>
 <button role="tab" aria-selected="false" data-p="goo">Go</button>
 <button class="cp" id="cp">Salin</button>
 </div>
 <pre class="out" id="term"></pre>
+<pre class="out" id="trc" hidden></pre>
 <pre class="out" id="pyo" hidden></pre>
 <pre class="out" id="goo" hidden></pre>
 </section>
 </main>
-<p class="note">Terjemahan Python dan Go dibuat otomatis saat kamu mengetik. Pada program ber-kamus, tipe Go diambil dari kamus. Tanpa kamus, Go memakai tebakan tipe sederhana, jadi periksa dulu sebelum dijalankan.</p>
+<p class="note">Tab Jejak mencatat setiap langkah program (nilai variabel, hasil kondisi, putaran perulangan); klik satu baris jejak untuk menyorot nomor barisnya di editor. Terjemahan Python dan Go dibuat otomatis saat kamu mengetik. Pada program ber-kamus, tipe Go diambil dari kamus. Tanpa kamus, Go memakai tebakan tipe sederhana, jadi periksa dulu sebelum dijalankan.</p>
 <details><summary>Referensi sintaks</summary>
 <pre>program Judul             (bentuk terstruktur)
 kamus
@@ -81,7 +96,7 @@ List     : [1, 2, 3]   a[0] (indeks mulai dari 0)   LENGTH(a)   APPEND(a, x)
 Bawaan   : INT FLOAT STR ABS ROUND SQRT MAX MIN UPPER LOWER
 Komentar : // atau #
 Kata kunci bahasa Indonesia juga bisa: JIKA MAKA LAINNYA SELAMA UNTUK DARI SAMPAI
-LANGKAH ULANGI KEMBALIKAN FUNGSI DAN ATAU BUKAN BENAR SALAH SELESAI</pre></details>
+LANGKAH ULANGI KEMBALIKAN FUNGSI DAN ATAU BUKAN BENAR SALAH SELESAI</pre></details></div></div>
 <script>
 const $=i=>document.getElementById(i);
 const KW={print:'PRINT',output:'PRINT',display:'PRINT',tampilkan:'PRINT',cetak:'PRINT',tulis:'PRINT',input:'INPUT',read:'INPUT',baca:'INPUT',masukkan:'INPUT',if:'IF',jika:'IF',then:'THEN',maka:'THEN',else:'ELSE',lainnya:'ELSE',selainitu:'ELSE',while:'WHILE',selama:'WHILE',do:'DO',lakukan:'DO',for:'FOR',untuk:'FOR',from:'FROM',dari:'FROM',to:'TO',sampai:'TO',hingga:'TO',step:'STEP',langkah:'STEP',each:'EACH',setiap:'EACH',in:'IN',dalam:'IN',repeat:'REPEAT',ulangi:'REPEAT',until:'UNTIL',function:'FUNCTION',fungsi:'FUNCTION',procedure:'FUNCTION',prosedur:'FUNCTION',return:'RETURN',kembalikan:'RETURN',and:'AND',dan:'AND',or:'OR',atau:'OR',not:'NOT',bukan:'NOT',mod:'MOD',div:'DIV',true:'TRUE',benar:'TRUE',false:'FALSE',salah:'FALSE',set:'SET',end:'END',endprogram:'ENDPROG',program:'PROGRAM',kamus:'KAMUS',algoritma:'ALGO',endif:'END',endwhile:'END',endfor:'END',endfunction:'END',endprocedure:'END',selesai:'END',akhir:'END'};
@@ -132,10 +147,10 @@ function asg(){const tg=post();if(!(isOp('<-')||isOp('='))){if(tg.t=='call'&&k>=
 function stmt(){const L=LN[pos++];T=L.toks;k=0;CL=L.ln;const f=T[0];let s;
  if(f.t=='kw'&&f.v!='SET'){k=1;s=kwS(f)}else{if(f.t=='kw')k=1;s=asg()}
  s.ln=L.ln;return s}
-function ifS(ln){const br=[];let els=null,c=E();if(isKw('THEN'))k++;eol();br.push({c,body:block(['ELSE','END'])});
+function ifS(ln){const br=[];let els=null,c=E();if(isKw('THEN'))k++;eol();br.push({c,ln:CL,body:block(['ELSE','END'])});
  for(;;){const L=endB(ln,'IF'),f=L.toks[0];T=L.toks;k=1;CL=L.ln;
   if(f.v=='END')break;
-  if(f.v=='ELSE'&&isKw('IF')){k++;c=E();if(isKw('THEN'))k++;eol();br.push({c,body:block(['ELSE','END'])})}
+  if(f.v=='ELSE'&&isKw('IF')){k++;c=E();if(isKw('THEN'))k++;eol();br.push({c,ln:CL,body:block(['ELSE','END'])})}
   else{eol();els=block(['END'])}}
  return{t:'if',br,els}}
 function kwS(f){const ln=CL;switch(f.v){
@@ -166,7 +181,7 @@ function parse(src){LN=src.split('\n').map((t,i)=>(CL=i+1,{ln:i+1,toks:tok(t)}))
 const tn=v=>typeof v=='number'?'angka':typeof v=='string'?'teks':typeof v=='boolean'?'boolean':Array.isArray(v)?'list':'None';
 const fm=(v,q)=>Array.isArray(v)?'['+v.map(x=>fm(x,1)).join(', ')+']':typeof v=='string'?(q?`'${v}'`:v):v===true?'True':v===false?'False':v===null?'None':String(v);
 const tr=v=>!(v===0||v===''||v===false||v===null||(Array.isArray(v)&&!v.length));
-function interp(ast,stdin){let out='',steps=0,cur=0,ip=0;const tk=(stdin||'').split(/\s+/).filter(Boolean),G0={v:Object.create(null)},fns={},DC=dcOf(ast),TC={integer:Number.isInteger,real:x=>typeof x=='number',string:x=>typeof x=='string',char:x=>typeof x=='string'&&x.length==1,boolean:x=>typeof x=='boolean'};
+function interp(ast,stdin,SRC=[]){let out='',steps=0,cur=0,ip=0,dep=0,trunc=0;const tk=(stdin||'').split(/\s+/).filter(Boolean),G0={v:Object.create(null)},fns={},LG=[],lg=(x,t='r',ln=cur)=>{if(LG.length<3000)LG.push({t,ln,x,d:dep,n:steps});else trunc=1},vals=(e,env)=>{const v=[];walk(e,n=>{if(n.t=='v'&&!v.some(q=>q[0]==n.name)){const x=n.name in env.v?env.v[n.name]:G0.v[n.name];if(x!==undefined)v.push([n.name,x])}});return v.map(q=>`${q[0]}=${fm(q[1],1)}`).join(', ')},R=x=>{if(x&&x.err)LG.push({t:'e',ln:x.err.ln,x:`${x.err.kind}: ${x.err.message}`,d:1,n:steps});return{out,log:LG,trunc,vars:G0.v,...x}},DC=dcOf(ast),TC={integer:Number.isInteger,real:x=>typeof x=='number',string:x=>typeof x=='string',char:x=>typeof x=='string'&&x.length==1,boolean:x=>typeof x=='boolean'};
  const err=(kd,m)=>{throw new Er(kd,m,cur)},tick=()=>{if(++steps>5e5)err('TimeoutError','program dihentikan setelah 500.000 langkah — mungkin ada perulangan tanpa akhir')};
  const get=(n,env)=>n in env.v?env.v[n]:n in G0.v?G0.v[n]:err('NameError',DC?(n in DC?`variabel “${n}” sudah dideklarasi tetapi belum diberi nilai`:`variabel “${n}” belum dideklarasi di kamus`):`variabel “${n}” belum didefinisikan`);
  const chk=(a,i)=>{if(!Array.isArray(a)&&typeof a!='string')err('TypeError',`${tn(a)} tidak bisa diindeks`);if(!Number.isInteger(i))err('TypeError','indeks harus bilangan bulat');if(i<0||i>=a.length)err('IndexError',`indeks ${i} di luar jangkauan (panjang ${a.length}, indeks valid 0..${a.length-1})`)};
@@ -174,7 +189,7 @@ function interp(ast,stdin){let out='',steps=0,cur=0,ip=0;const tk=(stdin||'').sp
  const B={len:a=>Array.isArray(a)||typeof a=='string'?a.length:err('TypeError','LENGTH butuh list atau teks'),append:(a,x)=>Array.isArray(a)?(a.push(x),null):err('TypeError','APPEND butuh list'),int:x=>Math.trunc(cv(x,'INT')),float:x=>cv(x,'FLOAT'),str:x=>fm(x),abs:x=>Math.abs(cv(x,'ABS')),round:x=>Math.round(cv(x,'ROUND')),sqrt:x=>cv(x,'SQRT')<0?err('ValueError','akar bilangan negatif'):Math.sqrt(x),max:(...a)=>Math.max(...(Array.isArray(a[0])?a[0]:a)),min:(...a)=>Math.min(...(Array.isArray(a[0])?a[0]:a)),upper:s=>String(s).toUpperCase(),lower:s=>String(s).toLowerCase(),pow:Math.pow};
  const call=(e,env)=>{const a=e.args.map(x=>ev(x,env)),f=fns[e.name];
   if(f){if(a.length!=f.params.length)err('TypeError',`fungsi “${f.name}” butuh ${f.params.length} argumen, tetapi diberi ${a.length}`);const ne={v:Object.create(null)};f.params.forEach((p,i)=>ne.v[p]=a[i]);const sv=cur;tick();
-   try{ex(f.body,ne)}catch(x){if(x instanceof Ret){cur=sv;return x.v}throw x}cur=sv;return null}
+   lg(`panggil ${e.name}(${a.map(q=>fm(q,1)).join(', ')})`);try{ex(f.body,ne)}catch(x){if(x instanceof Ret){cur=sv;lg(`${e.name} mengembalikan ${fm(x.v,1)}`);return x.v}throw x}cur=sv;return null}
   const b=B[bn(e.name)];if(!b)err('NameError',`fungsi “${e.name}” belum didefinisikan`);return b(...a)};
  const ev=(e,env)=>{switch(e.t){
   case'n':case's':case'b':return e.v;
@@ -193,27 +208,27 @@ function interp(ast,stdin){let out='',steps=0,cur=0,ip=0;const tk=(stdin||'').sp
    if(typeof a!='number'||typeof b!='number')err('TypeError',`operasi “${o}” tidak bisa dipakai pada ${tn(a)} dan ${tn(b)}`+(o=='+'?' — pakai STR() untuk mengubah angka menjadi teks':''));
    if((o=='/'||o=='//'||o=='%')&&b===0)err('ZeroDivisionError','pembagian dengan nol');
    return o=='+'?a+b:o=='-'?a-b:o=='*'?a*b:o=='/'?a/b:o=='//'?Math.floor(a/b):o=='%'?((a%b)+b)%b:a**b}}};
- const setT=(t,val,env)=>{if(t.t=='v'){if(DC&&env===G0){const d=DC[t.name];if(!d)err('NameError',`variabel “${t.name}” belum dideklarasi di kamus`);if(!TC[d](val))err('TypeError',`variabel “${t.name}” bertipe ${d}, tidak bisa diisi ${fm(val,1)} (${tn(val)})`)}env.v[t.name]=val;return}const a=ev(t.e,env),i=ev(t.i,env);chk(a,i);if(typeof a=='string')err('TypeError','teks tidak bisa diubah per karakter');a[i]=val};
- const ex=(b,env)=>{for(const s of b)st(s,env)};
- const st=(s,env)=>{cur=s.ln;tick();switch(s.t){
-  case'print':out+=s.args.map(a=>fm(ev(a,env))).join(' ')+'\n';break;
+ const setT=(t,val,env,nt)=>{if(t.t=='v'){if(DC&&env===G0){const d=DC[t.name];if(!d)err('NameError',`variabel “${t.name}” belum dideklarasi di kamus`);if(!TC[d](val))err('TypeError',`variabel “${t.name}” bertipe ${d}, tidak bisa diisi ${fm(val,1)} (${tn(val)})`)}const o=env.v[t.name];env.v[t.name]=val;lg(`${t.name} = ${fm(val,1)}${o!==undefined?` (sebelumnya ${fm(o,1)})`:''}${nt?`   \u2190 dari ${nt}`:''}`);return}const a=ev(t.e,env),i=ev(t.i,env);chk(a,i);if(typeof a=='string')err('TypeError','teks tidak bisa diubah per karakter');a[i]=val;lg(`elemen indeks ${i} = ${fm(val,1)}`)};
+ const ex=(b,env)=>{dep++;try{for(const s of b)st(s,env)}finally{dep--}};
+ const st=(s,env)=>{cur=s.ln;tick();if(s.t!='fn')lg(SRC[s.ln-1]?SRC[s.ln-1].trim():'','s');switch(s.t){
+  case'print':{const x=s.args.map(a=>fm(ev(a,env))).join(' ');out+=x+'\n';lg('output: '+x);break}
   case'input':for(const t of s.targets){if(ip>=tk.length)err('EOFError','INPUT meminta data, tetapi kolom Input sudah habis (pisahkan nilai dengan spasi atau baris baru)');const r=tk[ip++],d=DC&&t.t=='v'?DC[t.name]:null;let v=r;
    if(d=='integer'||d=='real'){v=Number(r);if(isNaN(v)||(d=='integer'&&!Number.isInteger(v)))err('ValueError',`input “${r}” bukan ${d}`)}
    else if(d=='boolean'){v=/^(true|benar)$/i.test(r)?true:/^(false|salah)$/i.test(r)?false:err('ValueError',`input “${r}” bukan boolean`)}
    else if(!d&&/^-?\d+(\.\d+)?$/.test(r))v=Number(r);
    setT(t,v,env)}break;
-  case'set':setT(s.target,ev(s.e,env),env);break;
+  case'set':{const v=ev(s.e,env);setT(s.target,v,env,vals(s.e,env));break}
   case'ex':ev(s.e,env);break;
   case'fn':fns[s.name]=s;break;
   case'ret':throw new Ret(s.e?ev(s.e,env):null);
-  case'if':{for(const b of s.br)if(tr(ev(b.c,env))){ex(b.body,env);return}if(s.els)ex(s.els,env);break}
-  case'while':for(;;){cur=s.ln;if(!tr(ev(s.c,env)))break;tick();ex(s.body,env)}break;
-  case'rep':do{tick();ex(s.body,env);cur=s.ln}while(!tr(ev(s.c,env)));break;
-  case'for':{const a=ev(s.a,env),b=ev(s.b,env),d=s.s?ev(s.s,env):1;if([a,b,d].some(x=>typeof x!='number'))err('TypeError','batas FOR harus berupa angka');if(d===0)err('ValueError','STEP tidak boleh 0');
+  case'if':{for(const b of s.br){cur=b.ln;const r=tr(ev(b.c,env));lg(`${b.ln==s.ln?'':'baris '+b.ln+' \u2014 '}kondisi \u2192 ${r?'True':'False'}  (${vals(b.c,env)||'tanpa variabel'})`);if(r){ex(b.body,env);return}}if(s.els){lg('semua kondisi False \u2192 masuk ke ELSE');ex(s.els,env)}else lg('semua kondisi False \u2192 IF dilewati');break}
+  case'while':for(;;){cur=s.ln;const r=tr(ev(s.c,env));lg(`kondisi \u2192 ${r?'True':'False'}  (${vals(s.c,env)||'tanpa variabel'})`);if(!r)break;tick();ex(s.body,env)}break;
+  case'rep':for(;;){tick();ex(s.body,env);cur=s.ln;const r=tr(ev(s.c,env));lg(`UNTIL \u2192 ${r?'True, berhenti':'False, ulangi'}  (${vals(s.c,env)||'tanpa variabel'})`);if(r)break}break;
+  case'for':{const a=ev(s.a,env),b=ev(s.b,env),d=s.s?ev(s.s,env):1;if([a,b,d].some(x=>typeof x!='number'))err('TypeError','batas FOR harus berupa angka');if(d===0)err('ValueError','STEP tidak boleh 0');lg(`FOR ${s.v}: dari ${a} sampai ${b}, langkah ${d}${(d>0?a>b:a<b)?' \u2192 tidak ada putaran (batas tidak terpenuhi)':''}`);
    for(let i=a;d>0?i<=b:i>=b;i+=d){setT({t:'v',name:s.v},i,env);tick();ex(s.body,env)}break}
   case'each':{const l=ev(s.e,env);if(!Array.isArray(l)&&typeof l!='string')err('TypeError',`FOR EACH butuh list atau teks, bukan ${tn(l)}`);for(const x of[...l]){setT({t:'v',name:s.v},x,env);tick();ex(s.body,env)}break}}};
- try{ast.forEach(s=>s.t=='fn'&&(fns[s.name]=s));ex(ast,G0);return{out}}
- catch(e){if(e instanceof Ret)return{out};if(e instanceof Er)return{out,err:e};if(e instanceof RangeError)return{out,err:new Er('RecursionError','rekursi terlalu dalam — pastikan ada kondisi berhenti',cur)};throw e}}
+ try{ast.forEach(s=>s.t=='fn'&&(fns[s.name]=s));ex(ast,G0);return R()}
+ catch(e){if(e instanceof Ret)return R();if(e instanceof Er)return R({err:e});if(e instanceof RangeError)return R({err:new Er('RecursionError','rekursi terlalu dalam — pastikan ada kondisi berhenti',cur)});throw e}}
 
 /* ---------- Penerjemah ---------- */
 let GE={},GR={},GI=new Set(),FN=new Set(),DCG=null;const GT={integer:'int',real:'float64',string:'string',boolean:'bool',char:'string'},dcOf=a=>a.prog?Object.assign(Object.create(null),Object.fromEntries(a.prog.decls.flatMap(d=>d.names.map(n=>[n,d.type])))):null;
@@ -300,23 +315,29 @@ const EX=[
 {n:'Rata-rata list',c:`angka <- [4, 8, 15, 16]\ntotal <- 0\n\nFOR EACH x IN angka\n  total <- total + x\nEND FOR\n\nPRINT "Total:", total\nPRINT "Rata-rata:", total / LENGTH(angka)\n`,i:''},
 {n:'FizzBuzz (WHILE)',c:`i <- 1\nWHILE i <= 15 DO\n  IF i MOD 15 = 0 THEN\n    PRINT "FizzBuzz"\n  ELSE IF i MOD 3 = 0 THEN\n    PRINT "Fizz"\n  ELSE IF i MOD 5 = 0 THEN\n    PRINT "Buzz"\n  ELSE\n    PRINT i\n  END IF\n  i <- i + 1\nEND WHILE\n`,i:''},
 {n:'Contoh error (coba jalankan)',c:`total <- 10\nPRINT "Total: " + total\n`,i:''}];
-const src=$('src'),gut=$('gut'),term=$('term'),pyo=$('pyo'),goo=$('goo'),inp=$('inp'),sel=$('sel');
+const src=$('src'),gut=$('gut'),term=$('term'),trc=$('trc'),pyo=$('pyo'),goo=$('goo'),inp=$('inp'),sel=$('sel');
 const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
-EX.forEach((x,i)=>sel.add(new Option(x.n,i)));
+EX.forEach((x,i)=>{sel.add(new Option(x.n,i));const b=document.createElement('button');b.textContent=x.n;b.onclick=()=>{sel.value=i;sel.onchange()};$('nav').append(b)});
+const fv=v=>Object.keys(v).map(n=>`${n}=${fm(v[n],1)}`).join(', ');
+function trace(r){const rows=r.log.map(e=>{const p=`margin-left:${Math.max(e.d-1,0)*16}px`;
+ if(e.t=='s')return`<span class='ls' data-ln='${e.ln}' style='${p}'><b>#${e.n}</b><i>baris ${e.ln}</i>${esc(e.x)}</span>`;
+ return`<span class='${e.t=='e'?'le':'lr'}' data-ln='${e.ln}' style='${p}'>${e.t=='e'?'\u2716':'\u21b3'} ${esc(e.x)}</span>`}).join('');
+ return`<span class='d'>Variabel akhir: ${esc(fv(r.vars)||'(kosong)')}</span>\n`+rows+(r.trunc?`<span class='d'>... jejak dipotong setelah 3.000 baris</span>`:'')}
+trc.onclick=e=>{const r=e.target.closest('[data-ln]');if(!r)return;const n=+r.dataset.ln;[...gut.children].forEach(c=>c.classList.remove('h'));const c=gut.children[n-1];if(c){c.classList.add('h');src.scrollTop=Math.max(0,(n-4)*20)}};
 function upd(){const s=src.value;gut.innerHTML=s.split('\n').map((_,i)=>`<div>${i+1}</div>`).join('');
  try{const a=parse(s);pyo.textContent=pyGen(a);goo.textContent=goGen(a)}
  catch(e){if(!(e instanceof Er))throw e;const m=`SyntaxError (baris ${e.ln}): ${e.message}`;pyo.textContent='# '+m;goo.textContent='// '+m}}
 function run(){const s=src.value,lines=s.split('\n');let h='<span class="d">$ jalankan program.psc</span>\n',code=0,eln=0;
- const show=e=>{code=1;eln=e.ln;const sy=e.kind=='SyntaxError';h+=`<span class="er">${sy?`  File "program.psc", baris ${e.ln}\n    ${esc((lines[e.ln-1]||'').trim())}`:`Traceback (panggilan terakhir):\n  baris ${e.ln}: ${esc((lines[e.ln-1]||'').trim())}`}\n${e.kind}: ${esc(e.message)}</span>\n`};
- try{const r=interp(parse(s),inp.value);h+=esc(r.out);if(r.err)show(r.err)}
+ const show=e=>{code=1;eln=e.ln;if(e.kind=='SyntaxError')trc.textContent='Program tidak dijalankan karena ada SyntaxError di baris '+e.ln+'. Perbaiki dulu, lalu jalankan lagi.';const sy=e.kind=='SyntaxError';h+=`<span class="er">${sy?`  File "program.psc", baris ${e.ln}\n    ${esc((lines[e.ln-1]||'').trim())}`:`Traceback (panggilan terakhir):\n  baris ${e.ln}: ${esc((lines[e.ln-1]||'').trim())}`}\n${e.kind}: ${esc(e.message)}</span>\n`};
+ try{const r=interp(parse(s),inp.value,lines);h+=esc(r.out);if(r.err)show(r.err);trc.innerHTML=trace(r)}
  catch(e){if(e instanceof Er)show(e);else{code=1;h+=`<span class="er">InternalError: ${esc(String(e))}</span>\n`}}
  term.innerHTML=h+`<span class="d">[proses selesai dengan kode ${code}]</span>`;
- tab('term');upd();if(eln&&gut.children[eln-1])gut.children[eln-1].classList.add('e')}
-function tab(p){document.querySelectorAll('.tabs [data-p]').forEach(b=>b.setAttribute('aria-selected',b.dataset.p==p));['term','pyo','goo'].forEach(x=>$(x).hidden=x!=p)}
+ if(!pyo.hidden||!goo.hidden)tab('term');upd();if(eln&&gut.children[eln-1])gut.children[eln-1].classList.add('e')}
+function tab(p){document.querySelectorAll('.tabs [data-p]').forEach(b=>b.setAttribute('aria-selected',b.dataset.p==p));['term','trc','pyo','goo'].forEach(x=>$(x).hidden=x!=p)}
 document.querySelectorAll('.tabs [data-p]').forEach(b=>b.onclick=()=>tab(b.dataset.p));
-$('cp').onclick=async()=>{const p=[term,pyo,goo].find(x=>!x.hidden);try{await navigator.clipboard.writeText(p.innerText);$('cp').textContent='Tersalin'}catch(e){$('cp').textContent='Gagal, blok manual'}setTimeout(()=>$('cp').textContent='Salin',1500)};
-$('run').onclick=run;
-sel.onchange=()=>{const x=EX[sel.value];src.value=x.c;inp.value=x.i;upd();run()};
+$('cp').onclick=async()=>{const p=[term,trc,pyo,goo].find(x=>!x.hidden);try{await navigator.clipboard.writeText(p.innerText);$('cp').textContent='Tersalin'}catch(e){$('cp').textContent='Gagal, blok manual'}setTimeout(()=>$('cp').textContent='Salin',1500)};
+$('run').onclick=run;$('tg').onclick=()=>document.body.classList.toggle('cl');document.body.classList.add('cl');
+sel.onchange=()=>{const x=EX[sel.value];src.value=x.c;inp.value=x.i;$('loc').textContent=x.n;[...$('nav').children].forEach((b,j)=>b.classList.toggle('on',j==+sel.value));upd();run()};
 src.oninput=upd;src.onscroll=()=>gut.scrollTop=src.scrollTop;
 src.onkeydown=e=>{if(e.key=='Tab'){e.preventDefault();document.execCommand('insertText',false,'  ')}else if(e.key=='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();run()}};
 sel.onchange();
