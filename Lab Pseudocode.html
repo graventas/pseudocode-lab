@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lab Pseudocode</title>
+<style>
+:root{--bg:#eef1f7;--card:#fff;--tx:#1b2033;--mu:#6a7089;--bd:#d5daea;--ac:#4251c9;--on:#fff;--gut:#f3f5fb;--tbg:#101431;--ttx:#dfe4ff;--er:#ff7b8f;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0f1a;--card:#151829;--tx:#e6e9f7;--mu:#8f95b5;--bd:#2a2f4a;--ac:#8b97ff;--on:#0d0f1a;--gut:#11142200;--tbg:#080a14;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d0f1a;--card:#151829;--tx:#e6e9f7;--mu:#8f95b5;--bd:#2a2f4a;--ac:#8b97ff;--on:#0d0f1a;--gut:#11142200;--tbg:#080a14;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:14px 18px}
+h1{font-size:19px;margin:0;font-weight:700;letter-spacing:-.01em;margin-right:auto}
+select,button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:6px;padding:6px 12px;cursor:pointer}
+button.go{background:var(--ac);color:var(--on);border-color:var(--ac);font-weight:600}
+button:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+main{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:0 18px 12px}
+@media(max-width:820px){main{grid-template-columns:1fr}}
+h2{font-size:13px;margin:0 0 6px;color:var(--mu);font-weight:600}
+.ed{display:flex;height:360px;border:1px solid var(--bd);border-radius:8px;overflow:hidden;background:var(--card)}
+#gut{width:42px;padding:10px 6px 10px 0;text-align:right;background:var(--gut);color:var(--mu);font:13px/20px var(--mono);overflow:hidden;user-select:none;border-right:1px solid var(--bd)}
+#gut .e{background:var(--er);color:#2a0a10}
+textarea{font:13px/20px var(--mono);color:var(--tx);background:transparent;border:0;resize:none;white-space:pre;tab-size:2}
+#src{flex:1;padding:10px;overflow:auto}
+#inp{width:100%;height:64px;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--card);white-space:pre-wrap}
+.tabs{display:flex;gap:6px;margin-bottom:6px;align-items:center}
+.tabs button[aria-selected=true]{background:var(--ac);color:var(--on);border-color:var(--ac)}
+.tabs .cp{margin-left:auto}
+pre.out{margin:0;height:432px;overflow:auto;padding:12px 14px;border-radius:8px;background:var(--tbg);color:var(--ttx);font:13px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word}
+pre.out[hidden]{display:none}
+.d{opacity:.55}.er{color:var(--er)}
+details{margin:0 18px 18px;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:10px 14px}
+summary{cursor:pointer;font-weight:600}
+details pre{margin:10px 0 0;font:12.5px/1.6 var(--mono);white-space:pre-wrap;overflow:auto}
+.note{margin:0 18px 8px;color:var(--mu);font-size:12.5px}
+</style></head><body>
+<header>
+<h1>Lab Pseudocode</h1>
+<select id="sel" aria-label="Contoh program"></select>
+<button class="go" id="run">Jalankan (Ctrl+Enter)</button>
+</header>
+<main>
+<section>
+<h2>Editor</h2>
+<div class="ed"><div id="gut"></div><textarea id="src" spellcheck="false" wrap="off" aria-label="Kode pseudocode"></textarea></div>
+<h2 style="margin-top:12px">Input (pisahkan dengan spasi atau baris baru)</h2>
+<textarea id="inp" spellcheck="false"></textarea>
+</section>
+<section>
+<div class="tabs" role="tablist">
+<button role="tab" aria-selected="true" data-p="term">Terminal</button>
+<button role="tab" aria-selected="false" data-p="pyo">Python</button>
+<button role="tab" aria-selected="false" data-p="goo">Go</button>
+<button class="cp" id="cp">Salin</button>
+</div>
+<pre class="out" id="term"></pre>
+<pre class="out" id="pyo" hidden></pre>
+<pre class="out" id="goo" hidden></pre>
+</section>
+</main>
+<p class="note">Terjemahan Python dan Go dibuat otomatis saat kamu mengetik. Pada program ber-kamus, tipe Go diambil dari kamus. Tanpa kamus, Go memakai tebakan tipe sederhana, jadi periksa dulu sebelum dijalankan.</p>
+<details><summary>Referensi sintaks</summary>
+<pre>program Judul             (bentuk terstruktur)
+kamus
+    a, b : integer        tipe: integer, real, string, boolean, char
+algoritma
+    a &lt;- 1                atau  a = 1  atau  a ← 1
+    input(a, b)           output(a, b)
+endprogram
+
+Tanpa program/kamus (gaya bebas) juga boleh:
+x &lt;- 5   atau   x = 5          isi variabel
+PRINT a, b                       (TAMPILKAN / CETAK)
+INPUT x                          (BACA) angka otomatis dikenali
+IF k THEN ... ELSE IF k THEN ... ELSE ... END IF
+WHILE k DO ... END WHILE
+FOR i FROM 1 TO 10 STEP 2 ... END FOR
+FOR EACH x IN daftar ... END FOR
+REPEAT ... UNTIL k
+FUNCTION f(a, b) ... RETURN a + b ... END FUNCTION
+Operator : + - * / DIV MOD ^   = &lt;&gt; &lt; &gt; &lt;= &gt;=   AND OR NOT
+List     : [1, 2, 3]   a[0] (indeks mulai dari 0)   LENGTH(a)   APPEND(a, x)
+Bawaan   : INT FLOAT STR ABS ROUND SQRT MAX MIN UPPER LOWER
+Komentar : // atau #
+Kata kunci bahasa Indonesia juga bisa: JIKA MAKA LAINNYA SELAMA UNTUK DARI SAMPAI
+LANGKAH ULANGI KEMBALIKAN FUNGSI DAN ATAU BUKAN BENAR SALAH SELESAI</pre></details>
+<script>
+const $=i=>document.getElementById(i);
+const KW={print:'PRINT',output:'PRINT',display:'PRINT',tampilkan:'PRINT',cetak:'PRINT',tulis:'PRINT',input:'INPUT',read:'INPUT',baca:'INPUT',masukkan:'INPUT',if:'IF',jika:'IF',then:'THEN',maka:'THEN',else:'ELSE',lainnya:'ELSE',selainitu:'ELSE',while:'WHILE',selama:'WHILE',do:'DO',lakukan:'DO',for:'FOR',untuk:'FOR',from:'FROM',dari:'FROM',to:'TO',sampai:'TO',hingga:'TO',step:'STEP',langkah:'STEP',each:'EACH',setiap:'EACH',in:'IN',dalam:'IN',repeat:'REPEAT',ulangi:'REPEAT',until:'UNTIL',function:'FUNCTION',fungsi:'FUNCTION',procedure:'FUNCTION',prosedur:'FUNCTION',return:'RETURN',kembalikan:'RETURN',and:'AND',dan:'AND',or:'OR',atau:'OR',not:'NOT',bukan:'NOT',mod:'MOD',div:'DIV',true:'TRUE',benar:'TRUE',false:'FALSE',salah:'FALSE',set:'SET',end:'END',endprogram:'ENDPROG',program:'PROGRAM',kamus:'KAMUS',algoritma:'ALGO',endif:'END',endwhile:'END',endfor:'END',endfunction:'END',endprocedure:'END',selesai:'END',akhir:'END'};
+const AL={length:'len',panjang:'len',tambah:'append',akar:'sqrt'},bn=n=>(n=n.toLowerCase(),AL[n]||n);
+const PR={or:1,and:2,'==':4,'!=':4,'<':4,'>':4,'<=':4,'>=':4,'+':5,'-':5,'*':6,'/':6,'//':6,'%':6,'**':8};
+class Er extends Error{constructor(kind,m,ln){super(m);this.kind=kind;this.ln=ln}}
+class Ret{constructor(v){this.v=v}}
+const walk=(n,f)=>{if(Array.isArray(n))n.forEach(x=>walk(x,f));else if(n&&typeof n=='object'){f(n);for(const q in n)walk(n[q],f)}};
+
+/* ---------- Parser ---------- */
+let LN,pos,T,k,CL;
+const fail=m=>{throw new Er('SyntaxError',m,CL)};
+const isOp=v=>T[k]&&T[k].t=='op'&&T[k].v==v,isKw=v=>T[k]&&T[k].t=='kw'&&T[k].v==v;
+const eat=v=>isOp(v)?k++:fail(`diharapkan “${v}”`);
+const kw=v=>isKw(v)?k++:fail(`diharapkan kata “${v}”`);
+const eol=()=>{if(k<T.length)fail(`token berlebih “${T[k].v}”`)};
+const id=()=>T[k]&&T[k].t=='id'?T[k++].v:fail('diharapkan nama variabel');
+const list=c=>{const a=[];if(!isOp(c)&&k<T.length){do a.push(E());while(isOp(',')&&++k)}return a};
+function tok(line){const r=[],X=/\s*(?:(\d+\.?\d*)|("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')|([A-Za-z_]\w*)|(\/\/.*|#.*)|(<-|<=|>=|<>|==|!=|:=|←|[-+*\/^()\[\],<>=:])|(\S))/y;let m;
+ while(X.lastIndex<line.length&&(m=X.exec(line))){
+  if(m[1]!==undefined)r.push({t:'n',v:+m[1],raw:m[1]});
+  else if(m[2])r.push({t:'s',v:m[2].slice(1,-1).replace(/\\(.)/g,(_,c)=>c=='n'?'\n':c=='t'?'\t':c)});
+  else if(m[3]){const w=m[3].toLowerCase();r.push(KW[w]?{t:'kw',v:KW[w]}:{t:'id',v:m[3]})}
+  else if(m[4])break;else if(m[5])r.push({t:'op',v:m[5]=='←'||m[5]==':='?'<-':m[5]});
+  else fail(/["']/.test(m[6])?'teks belum ditutup dengan tanda kutip':`karakter tidak dikenal “${m[6]}”`)}
+ return r}
+function E(){let l=andE();while(isKw('OR')){k++;l={t:'bin',op:'or',l,r:andE()}}return l}
+function andE(){let l=notE();while(isKw('AND')){k++;l={t:'bin',op:'and',l,r:notE()}}return l}
+function notE(){if(isKw('NOT')){k++;return{t:'un',op:'not',e:notE()}}return cmp()}
+function cmp(){const m={'=':'==','==':'==','!=':'!=','<>':'!=','<':'<','>':'>','<=':'<=','>=':'>='};let l=add();while(T[k]&&T[k].t=='op'&&m[T[k].v]){const op=m[T[k++].v];l={t:'bin',op,l,r:add()}}return l}
+function add(){let l=mul();while(isOp('+')||isOp('-')){const op=T[k++].v;l={t:'bin',op,l,r:mul()}}return l}
+function mul(){let l=un();while(isOp('*')||isOp('/')||isKw('MOD')||isKw('DIV')){const x=T[k++],op=x.t=='kw'?(x.v=='MOD'?'%':'//'):x.v;l={t:'bin',op,l,r:un()}}return l}
+function un(){if(isOp('-')){k++;return{t:'un',op:'-',e:un()}}return pw()}
+function pw(){const l=post();if(isOp('^')){k++;return{t:'bin',op:'**',l,r:un()}}return l}
+function post(){let e=prim();while(isOp('[')){k++;const i=E();eat(']');e={t:'idx',e,i}}return e}
+function prim(){const x=T[k++];if(!x)fail('ekspresi belum lengkap');
+ if(x.t=='n')return{t:'n',v:x.v,raw:x.raw};if(x.t=='s')return{t:'s',v:x.v};
+ if(x.t=='kw'&&(x.v=='TRUE'||x.v=='FALSE'))return{t:'b',v:x.v=='TRUE'};
+ if(x.t=='id'){if(isOp('(')){k++;const a=list(')');eat(')');return{t:'call',name:x.v,args:a}}return{t:'v',name:x.v}}
+ if(x.t=='op'&&x.v=='('){const e=E();eat(')');return e}
+ if(x.t=='op'&&x.v=='['){const a=list(']');eat(']');return{t:'l',items:a}}
+ fail(`token tidak terduga “${x.v}”`)}
+const par=()=>{if(isOp('(')){let d=0,j=k;for(;j<T.length;j++){if(T[j].t=='op'&&T[j].v=='(')d++;if(T[j].t=='op'&&T[j].v==')'&&--d==0)break}if(j==T.length-1){k++;const a=list(')');eat(')');return a}}return list('')};
+function block(stops){const o=[];while(pos<LN.length){const f=LN[pos].toks[0];if(f.t=='kw'&&stops.includes(f.v))break;o.push(stmt())}return o}
+function endB(ln,w){const L=LN[pos];if(!L)throw new Er('SyntaxError',`blok ${w} belum ditutup (kurang END)`,ln);pos++;return L}
+function asg(){const tg=post();if(!(isOp('<-')||isOp('='))){if(tg.t=='call'&&k>=T.length)return{t:'ex',e:tg};fail('pernyataan tidak dikenal — untuk mengisi variabel pakai “<-” atau “=”')}
+ if(tg.t!='v'&&tg.t!='idx')fail('sisi kiri harus berupa variabel');k++;const e=E();eol();return{t:'set',target:tg,e}}
+function stmt(){const L=LN[pos++];T=L.toks;k=0;CL=L.ln;const f=T[0];let s;
+ if(f.t=='kw'&&f.v!='SET'){k=1;s=kwS(f)}else{if(f.t=='kw')k=1;s=asg()}
+ s.ln=L.ln;return s}
+function ifS(ln){const br=[];let els=null,c=E();if(isKw('THEN'))k++;eol();br.push({c,body:block(['ELSE','END'])});
+ for(;;){const L=endB(ln,'IF'),f=L.toks[0];T=L.toks;k=1;CL=L.ln;
+  if(f.v=='END')break;
+  if(f.v=='ELSE'&&isKw('IF')){k++;c=E();if(isKw('THEN'))k++;eol();br.push({c,body:block(['ELSE','END'])})}
+  else{eol();els=block(['END'])}}
+ return{t:'if',br,els}}
+function kwS(f){const ln=CL;switch(f.v){
+ case'PRINT':{const a=par();eol();return{t:'print',args:a}}
+ case'INPUT':{const a=par();eol();if(!a.length||a.some(t=>t.t!='v'&&t.t!='idx'))fail('INPUT harus diisi nama variabel, contoh: input(a, b)');return{t:'input',targets:a}}
+ case'RETURN':{const e=k<T.length?E():null;eol();return{t:'ret',e}}
+ case'IF':return ifS(ln);
+ case'WHILE':{const c=E();if(isKw('DO'))k++;eol();const body=block(['END']);endB(ln,'WHILE');return{t:'while',c,body}}
+ case'FOR':{if(isKw('EACH')){k++;const v=id();kw('IN');const e=E();eol();const body=block(['END']);endB(ln,'FOR');return{t:'each',v,e,body}}
+  const v=id();if(isOp('=')||isOp('<-')||isKw('FROM'))k++;const a=E();kw('TO');const b=E();let s=null;if(isKw('STEP')){k++;s=E()}if(isKw('DO'))k++;eol();
+  const body=block(['END']);endB(ln,'FOR');return{t:'for',v,a,b,s,body}}
+ case'REPEAT':{eol();const body=block(['UNTIL','TO']),L=endB(ln,'REPEAT');T=L.toks;k=1;CL=L.ln;const c=E();eol();return{t:'rep',body,c}}
+ case'FUNCTION':{const name=id(),ps=[];if(isOp('(')){k++;if(!isOp(')')){do ps.push(id());while(isOp(',')&&++k)}eat(')')}eol();const body=block(['END']);endB(ln,'FUNCTION');return{t:'fn',name,params:ps,body}}
+ default:fail(`“${f.v}” tidak pada tempatnya (tidak ada blok yang sedang terbuka)`)}}
+const TYS=['integer','real','string','boolean','char'],isK=(L,v)=>L&&L.toks[0].t=='kw'&&L.toks[0].v==v;
+function parse(src){LN=src.split('\n').map((t,i)=>(CL=i+1,{ln:i+1,toks:tok(t)})).filter(l=>l.toks.length);pos=0;
+ if(!isK(LN[0],'PROGRAM'))return block([]);
+ const hd=LN[pos++];T=hd.toks;k=1;CL=hd.ln;const name=T[1]?String(T[1].v):fail('diharapkan judul program setelah “program”'),decls=[];
+ if(isK(LN[pos],'KAMUS')){pos++;
+  while(pos<LN.length&&!isK(LN[pos],'ALGO')){const L=LN[pos++];T=L.toks;k=0;CL=L.ln;const names=[id()];while(isOp(',')){k++;names.push(id())}eat(':');const type=id().toLowerCase();if(!TYS.includes(type))fail(`tipe “${type}” tidak dikenal (pilih: ${TYS.join(', ')})`);eol();decls.push({names,type})}}
+ if(!isK(LN[pos],'ALGO'))throw new Er('SyntaxError','bagian “algoritma” tidak ditemukan',hd.ln);
+ pos++;const body=block(['ENDPROG']);
+ if(pos>=LN.length)throw new Er('SyntaxError','program belum ditutup — tambahkan “endprogram” di akhir',hd.ln);
+ pos++;if(pos<LN.length){CL=LN[pos].ln;T=LN[pos].toks;k=0;fail('ada baris setelah “endprogram”')}
+ body.prog={name,decls};return body}
+
+/* ---------- Interpreter ---------- */
+const tn=v=>typeof v=='number'?'angka':typeof v=='string'?'teks':typeof v=='boolean'?'boolean':Array.isArray(v)?'list':'None';
+const fm=(v,q)=>Array.isArray(v)?'['+v.map(x=>fm(x,1)).join(', ')+']':typeof v=='string'?(q?`'${v}'`:v):v===true?'True':v===false?'False':v===null?'None':String(v);
+const tr=v=>!(v===0||v===''||v===false||v===null||(Array.isArray(v)&&!v.length));
+function interp(ast,stdin){let out='',steps=0,cur=0,ip=0;const tk=(stdin||'').split(/\s+/).filter(Boolean),G0={v:Object.create(null)},fns={},DC=dcOf(ast),TC={integer:Number.isInteger,real:x=>typeof x=='number',string:x=>typeof x=='string',char:x=>typeof x=='string'&&x.length==1,boolean:x=>typeof x=='boolean'};
+ const err=(kd,m)=>{throw new Er(kd,m,cur)},tick=()=>{if(++steps>5e5)err('TimeoutError','program dihentikan setelah 500.000 langkah — mungkin ada perulangan tanpa akhir')};
+ const get=(n,env)=>n in env.v?env.v[n]:n in G0.v?G0.v[n]:err('NameError',DC?(n in DC?`variabel “${n}” sudah dideklarasi tetapi belum diberi nilai`:`variabel “${n}” belum dideklarasi di kamus`):`variabel “${n}” belum didefinisikan`);
+ const chk=(a,i)=>{if(!Array.isArray(a)&&typeof a!='string')err('TypeError',`${tn(a)} tidak bisa diindeks`);if(!Number.isInteger(i))err('TypeError','indeks harus bilangan bulat');if(i<0||i>=a.length)err('IndexError',`indeks ${i} di luar jangkauan (panjang ${a.length}, indeks valid 0..${a.length-1})`)};
+ const cv=(x,w)=>{const n=Number(x);return x===''||isNaN(n)?err('ValueError',`${w} tidak bisa mengubah ${fm(x,1)} menjadi angka`):n};
+ const B={len:a=>Array.isArray(a)||typeof a=='string'?a.length:err('TypeError','LENGTH butuh list atau teks'),append:(a,x)=>Array.isArray(a)?(a.push(x),null):err('TypeError','APPEND butuh list'),int:x=>Math.trunc(cv(x,'INT')),float:x=>cv(x,'FLOAT'),str:x=>fm(x),abs:x=>Math.abs(cv(x,'ABS')),round:x=>Math.round(cv(x,'ROUND')),sqrt:x=>cv(x,'SQRT')<0?err('ValueError','akar bilangan negatif'):Math.sqrt(x),max:(...a)=>Math.max(...(Array.isArray(a[0])?a[0]:a)),min:(...a)=>Math.min(...(Array.isArray(a[0])?a[0]:a)),upper:s=>String(s).toUpperCase(),lower:s=>String(s).toLowerCase(),pow:Math.pow};
+ const call=(e,env)=>{const a=e.args.map(x=>ev(x,env)),f=fns[e.name];
+  if(f){if(a.length!=f.params.length)err('TypeError',`fungsi “${f.name}” butuh ${f.params.length} argumen, tetapi diberi ${a.length}`);const ne={v:Object.create(null)};f.params.forEach((p,i)=>ne.v[p]=a[i]);const sv=cur;tick();
+   try{ex(f.body,ne)}catch(x){if(x instanceof Ret){cur=sv;return x.v}throw x}cur=sv;return null}
+  const b=B[bn(e.name)];if(!b)err('NameError',`fungsi “${e.name}” belum didefinisikan`);return b(...a)};
+ const ev=(e,env)=>{switch(e.t){
+  case'n':case's':case'b':return e.v;
+  case'l':return e.items.map(x=>ev(x,env));
+  case'v':return get(e.name,env);
+  case'un':{const v=ev(e.e,env);if(e.op=='not')return!tr(v);if(typeof v!='number')err('TypeError',`tanda minus tidak bisa dipakai pada ${tn(v)}`);return-v}
+  case'idx':{const a=ev(e.e,env),i=ev(e.i,env);chk(a,i);return a[i]}
+  case'call':return call(e,env);
+  case'bin':{const o=e.op;
+   if(o=='and'){const l=ev(e.l,env);return tr(l)?ev(e.r,env):l}
+   if(o=='or'){const l=ev(e.l,env);return tr(l)?l:ev(e.r,env)}
+   const a=ev(e.l,env),b=ev(e.r,env);
+   if(o=='=='||o=='!=')return(JSON.stringify(a)==JSON.stringify(b))==(o=='==');
+   if(o=='+'&&(typeof a=='string'&&typeof b=='string'||Array.isArray(a)&&Array.isArray(b)))return a.concat(b);
+   if(['<','>','<=','>='].includes(o)){if(typeof a!=typeof b||(typeof a!='number'&&typeof a!='string'))err('TypeError',`tidak bisa membandingkan ${tn(a)} dengan ${tn(b)} memakai “${o}”`);return o=='<'?a<b:o=='>'?a>b:o=='<='?a<=b:a>=b}
+   if(typeof a!='number'||typeof b!='number')err('TypeError',`operasi “${o}” tidak bisa dipakai pada ${tn(a)} dan ${tn(b)}`+(o=='+'?' — pakai STR() untuk mengubah angka menjadi teks':''));
+   if((o=='/'||o=='//'||o=='%')&&b===0)err('ZeroDivisionError','pembagian dengan nol');
+   return o=='+'?a+b:o=='-'?a-b:o=='*'?a*b:o=='/'?a/b:o=='//'?Math.floor(a/b):o=='%'?((a%b)+b)%b:a**b}}};
+ const setT=(t,val,env)=>{if(t.t=='v'){if(DC&&env===G0){const d=DC[t.name];if(!d)err('NameError',`variabel “${t.name}” belum dideklarasi di kamus`);if(!TC[d](val))err('TypeError',`variabel “${t.name}” bertipe ${d}, tidak bisa diisi ${fm(val,1)} (${tn(val)})`)}env.v[t.name]=val;return}const a=ev(t.e,env),i=ev(t.i,env);chk(a,i);if(typeof a=='string')err('TypeError','teks tidak bisa diubah per karakter');a[i]=val};
+ const ex=(b,env)=>{for(const s of b)st(s,env)};
+ const st=(s,env)=>{cur=s.ln;tick();switch(s.t){
+  case'print':out+=s.args.map(a=>fm(ev(a,env))).join(' ')+'\n';break;
+  case'input':for(const t of s.targets){if(ip>=tk.length)err('EOFError','INPUT meminta data, tetapi kolom Input sudah habis (pisahkan nilai dengan spasi atau baris baru)');const r=tk[ip++],d=DC&&t.t=='v'?DC[t.name]:null;let v=r;
+   if(d=='integer'||d=='real'){v=Number(r);if(isNaN(v)||(d=='integer'&&!Number.isInteger(v)))err('ValueError',`input “${r}” bukan ${d}`)}
+   else if(d=='boolean'){v=/^(true|benar)$/i.test(r)?true:/^(false|salah)$/i.test(r)?false:err('ValueError',`input “${r}” bukan boolean`)}
+   else if(!d&&/^-?\d+(\.\d+)?$/.test(r))v=Number(r);
+   setT(t,v,env)}break;
+  case'set':setT(s.target,ev(s.e,env),env);break;
+  case'ex':ev(s.e,env);break;
+  case'fn':fns[s.name]=s;break;
+  case'ret':throw new Ret(s.e?ev(s.e,env):null);
+  case'if':{for(const b of s.br)if(tr(ev(b.c,env))){ex(b.body,env);return}if(s.els)ex(s.els,env);break}
+  case'while':for(;;){cur=s.ln;if(!tr(ev(s.c,env)))break;tick();ex(s.body,env)}break;
+  case'rep':do{tick();ex(s.body,env);cur=s.ln}while(!tr(ev(s.c,env)));break;
+  case'for':{const a=ev(s.a,env),b=ev(s.b,env),d=s.s?ev(s.s,env):1;if([a,b,d].some(x=>typeof x!='number'))err('TypeError','batas FOR harus berupa angka');if(d===0)err('ValueError','STEP tidak boleh 0');
+   for(let i=a;d>0?i<=b:i>=b;i+=d){setT({t:'v',name:s.v},i,env);tick();ex(s.body,env)}break}
+  case'each':{const l=ev(s.e,env);if(!Array.isArray(l)&&typeof l!='string')err('TypeError',`FOR EACH butuh list atau teks, bukan ${tn(l)}`);for(const x of[...l]){setT({t:'v',name:s.v},x,env);tick();ex(s.body,env)}break}}};
+ try{ast.forEach(s=>s.t=='fn'&&(fns[s.name]=s));ex(ast,G0);return{out}}
+ catch(e){if(e instanceof Ret)return{out};if(e instanceof Er)return{out,err:e};if(e instanceof RangeError)return{out,err:new Er('RecursionError','rekursi terlalu dalam — pastikan ada kondisi berhenti',cur)};throw e}}
+
+/* ---------- Penerjemah ---------- */
+let GE={},GR={},GI=new Set(),FN=new Set(),DCG=null;const GT={integer:'int',real:'float64',string:'string',boolean:'bool',char:'string'},dcOf=a=>a.prog?Object.assign(Object.create(null),Object.fromEntries(a.prog.decls.flatMap(d=>d.names.map(n=>[n,d.type])))):null;
+function ty(e){switch(e.t){
+ case'n':return/\./.test(e.raw)?'float64':'int';
+ case's':return'string';case'b':return'bool';
+ case'l':return'[]'+(e.items.length?ty(e.items[0]):'int');
+ case'v':return GE[e.name]||'int';
+ case'idx':{const t=ty(e.e);return t[0]=='['?t.slice(2):t=='string'?'string':'int'}
+ case'un':return e.op=='not'?'bool':ty(e.e);
+ case'bin':{const o=e.op,a=ty(e.l),b=ty(e.r);if(PR[o]<=4)return'bool';if(o=='**'||o=='/')return'float64';if(a=='string'||a[0]=='[')return a;return a=='float64'||b=='float64'?'float64':'int'}
+ case'call':{if(FN.has(e.name))return GR[e.name]||'int';return{len:'int',int:'int',float:'float64',sqrt:'float64',pow:'float64',round:'float64',str:'string',upper:'string',lower:'string'}[bn(e.name)]||(e.args[0]?ty(e.args[0]):'int')}}}
+function G(e,L,pp=0){const py=L=='py',g=(x,p=0)=>G(x,L,p);let s,p=9;
+ switch(e.t){
+  case'n':s=e.raw;break;
+  case's':s=JSON.stringify(e.v);break;
+  case'b':s=py?(e.v?'True':'False'):''+e.v;break;
+  case'l':{const it=e.items.map(x=>g(x)).join(', ');s=py?`[${it}]`:`[]${e.items.length?ty(e.items[0]):'int'}{${it}}`;break}
+  case'v':s=e.name;break;
+  case'idx':s=g(e.e,9)+'['+g(e.i)+']';break;
+  case'un':if(e.op=='not'){p=3;s=(py?'not ':'!')+g(e.e,3)}else{p=7;s='-'+g(e.e,7)}break;
+  case'bin':{const o=e.op;p=PR[o];let a=g(e.l,p),b=g(e.r,p+1);
+   if(py){s=`${a} ${o} ${b}`;break}
+   const lt=ty(e.l),rt=ty(e.r),A=['+','-','*','/','//'].includes(o)&&lt!='string'&&rt!='string'&&lt[0]!='[',fl=lt=='float64'||rt=='float64',w=(x,t)=>t=='float64'?x:`float64(${x})`;
+   if(o=='**'){GI.add('math');s=`math.Pow(${w(a,lt)}, ${w(b,rt)})`;p=9;break}
+   if(A&&(fl||o=='/')){a=w(a,lt);b=w(b,rt)}
+   if(o=='//'&&A&&fl){GI.add('math');s=`math.Floor(${a} / ${b})`;p=9}
+   else s=`${a} ${o=='and'?'&&':o=='or'?'||':o=='//'?'/':o} ${b}`;break}
+  case'call':{const n=bn(e.name);let a=e.args.map(x=>g(x));
+   if(FN.has(e.name)){s=`${e.name}(${a.join(', ')})`;break}
+   if(py){if(['upper','lower','append'].includes(n)){s=`${g(e.args[0],9)}.${n}(${a.slice(1).join(', ')})`;break}
+    if(n=='sqrt')GI.add('math');s=`${{sqrt:'math.sqrt'}[n]||n}(${a.join(', ')})`;break}
+   if(['sqrt','pow','abs','round'].includes(n)){GI.add('math');a=e.args.map(x=>ty(x)=='float64'?g(x):`float64(${g(x)})`)}
+   if(['upper','lower'].includes(n))GI.add('strings');if(n=='str')GI.add('fmt');
+   s=`${{float:'float64',str:'fmt.Sprint',abs:'math.Abs',round:'math.Round',sqrt:'math.Sqrt',pow:'math.Pow',upper:'strings.ToUpper',lower:'strings.ToLower'}[n]||n}(${a.join(', ')})`;break}}
+ return p<pp?`(${s})`:s}
+const isNeg=s=>s&&s.t=='un'&&s.op=='-';
+function pyGen(ast){GI=new Set();FN=new Set(ast.filter(s=>s.t=='fn').map(f=>f.name));DCG=dcOf(ast);const o=ast.prog?['# Program '+ast.prog.name,'']:[];
+ const B=(b,d)=>{if(!b.length)o.push('    '.repeat(d)+'pass');b.forEach(s=>S(s,d))};
+ const S=(s,d)=>{const w=x=>o.push('    '.repeat(d)+x),g=x=>G(x,'py');switch(s.t){
+  case'print':w(`print(${s.args.map(g).join(', ')})`);break;
+  case'input':{const cv=t=>{const d=DCG&&t.t=='v'?DCG[t.name]:'';return d=='real'?'float':d=='string'||d=='char'?'str':'int'},gs=s.targets.map(g),cs=s.targets.map(cv);
+   if(gs.length>1&&cs.every(c=>c==cs[0]))w(`${gs.join(', ')} = ${cs[0]=='str'?'input().split()':`map(${cs[0]}, input().split())`}`);
+   else gs.forEach((x,i)=>w(`${x} = ${cs[i]=='str'?'input()':`${cs[i]}(input())`}`));break}
+  case'set':w(`${g(s.target)} = ${g(s.e)}`);break;
+  case'ex':w(g(s.e));break;
+  case'if':s.br.forEach((b,i)=>{w((i?'elif ':'if ')+g(b.c)+':');B(b.body,d+1)});if(s.els){w('else:');B(s.els,d+1)}break;
+  case'while':w(`while ${g(s.c)}:`);B(s.body,d+1);break;
+  case'for':{const ng=isNeg(s.s),stop=s.b.t=='n'?String(s.b.v+(ng?-1:1)):`${g(s.b,5)} ${ng?'-':'+'} 1`;w(`for ${s.v} in range(${g(s.a)}, ${stop}${s.s?', '+g(s.s):''}):`);B(s.body,d+1);break}
+  case'each':w(`for ${s.v} in ${g(s.e)}:`);B(s.body,d+1);break;
+  case'rep':w('while True:');B(s.body,d+1);w(`    if ${g(s.c)}:`);w('        break');break;
+  case'fn':w(`def ${s.name}(${s.params.join(', ')}):`);B(s.body,d+1);break;
+  case'ret':w(s.e?`return ${g(s.e)}`:'return');break}};
+ ast.forEach(s=>S(s,0));return(GI.has('math')?'import math\n\n':'')+o.join('\n')}
+function goGen(ast){GI=new Set();GE={};GR={};let cur=[];const o=[],fns=ast.filter(s=>s.t=='fn'),main=ast.filter(s=>s.t!='fn'),calls={};
+ FN=new Set(fns.map(f=>f.name));walk(ast,n=>{if(n.t=='call'&&!calls[n.name])calls[n.name]=n.args});
+ const blk=(b,d)=>b.forEach(s=>S(s,d));
+ const S=(s,d)=>{const w=x=>cur.push('\t'.repeat(d)+x),g=x=>G(x,'go');switch(s.t){
+  case'print':GI.add('fmt');w(`fmt.Println(${s.args.map(g).join(', ')})`);break;
+  case'input':{GI.add('fmt');s.targets.forEach(t=>{if(t.t=='v'&&!(t.name in GE)){GE[t.name]='int';w(`var ${t.name} int`)}});w(`fmt.Scan(${s.targets.map(t=>'&'+g(t)).join(', ')})`);break}
+  case'set':{const t=s.target;if(t.t=='v'&&!(t.name in GE)){const tp=ty(s.e);w(`${t.name} := ${g(s.e)}`);GE[t.name]=tp}else w(`${g(t)} = ${g(s.e)}`);break}
+  case'ex':{const e=s.e;if(e.t=='call'&&bn(e.name)=='append'&&!FN.has(e.name))w(`${g(e.args[0])} = append(${g(e.args[0])}, ${g(e.args[1])})`);else w(g(e));break}
+  case'if':s.br.forEach((b,i)=>{w((i?'} else if ':'if ')+g(b.c)+' {');blk(b.body,d+1)});if(s.els){w('} else {');blk(s.els,d+1)}w('}');break;
+  case'while':w(`for ${g(s.c)} {`);blk(s.body,d+1);w('}');break;
+  case'for':{const dc=s.v in GE?'=':':=';GE[s.v]=GE[s.v]||'int';w(`for ${s.v} ${dc} ${g(s.a)}; ${s.v} ${isNeg(s.s)?'>=':'<='} ${g(s.b)}; ${s.s?`${s.v} += ${g(s.s)}`:s.v+'++'} {`);blk(s.body,d+1);w('}');break}
+  case'each':{const lt=ty(s.e);GE[s.v]=lt[0]=='['?lt.slice(2):'int';w(`for _, ${s.v} := range ${g(s.e)} {`);blk(s.body,d+1);w('}');break}
+  case'rep':w('for {');blk(s.body,d+1);w(`\tif ${g(s.c)} {`);w('\t\tbreak');w('\t}');w('}');break;
+  case'ret':w(s.e?`return ${g(s.e)}`:'return');break}};
+ fns.forEach(f=>{GE={};f.params.forEach((p,i)=>GE[p]=calls[f.name]&&calls[f.name][i]?ty(calls[f.name][i]):'int');
+  const sv=cur;cur=[];blk(f.body,1);const body=cur;cur=sv;let rt='';walk(f.body,n=>{if(!rt&&n.t=='ret'&&n.e)rt=ty(n.e)});GR[f.name]=rt;
+  o.push(`func ${f.name}(${f.params.map(p=>p+' '+GE[p]).join(', ')})${rt?' '+rt:''} {`,...body,'}','')});
+ GE={};cur=[];if(ast.prog)ast.prog.decls.forEach(d=>{const t=GT[d.type];d.names.forEach(n=>GE[n]=t);cur.push(`\tvar ${d.names.join(', ')} ${t}`)});blk(main,1);o.push('func main() {',...cur,'}');
+ const im=[...GI].sort();return(ast.prog?`// Program ${ast.prog.name}\n`:'')+'package main\n\n'+(im.length?(im.length==1?`import "${im[0]}"`:`import (\n${im.map(x=>`\t"${x}"`).join('\n')}\n)`)+'\n\n':'')+o.join('\n')}
+
+/* ---------- UI ---------- */
+const EX=[
+{n:'Cetak_Barisan',c:`program Cetak_Barisan\nkamus\n    n, m, i : integer\nalgoritma\n    input(n, m)\n    for i <- n to m do\n        output(i)\n    endfor\nendprogram\n`,i:'3 7'},
+{n:'Digit awal + akhir',c:`program Digit_Awal_Akhir\nkamus\n    n, i, bilangan, jumlah, d1, d4 : integer\nalgoritma\n    input(n)\n    jumlah <- 0\n    for i <- 1 to n do\n        input(bilangan)\n        d1 = bilangan div 1000\n        d4 = bilangan mod 10\n        jumlah <- jumlah + d1 + d4\n    endfor\n    output(jumlah)\nendprogram\n`,i:'2\n1234\n5678'},
+{n:'Jarak',c:`program Jarak\nkamus\n    posisi, posisi0 : integer\n    kecepatan, waktu : integer\nalgoritma\n    input(posisi0, kecepatan, waktu)\n    posisi <- posisi0 + (kecepatan * waktu)\n    output(posisi)\nendprogram\n`,i:'10 5 3'},
+{n:'Suhu',c:`program Suhu\nkamus\n    celcius, reamur, fahrenheit, kelvin : real\nalgoritma\n    input(celcius)\n    reamur <- celcius * 4/5\n    fahrenheit <- celcius * 9/5 + 32\n    kelvin <- celcius + 273.15\n    output(reamur, fahrenheit, kelvin)\nendprogram\n`,i:'100'},
+{n:'Contoh error: belum dideklarasi',c:`program Error_Contoh\nkamus\n    a : integer\nalgoritma\n    a <- 5\n    b <- a + 1\n    output(b)\nendprogram\n`,i:''},
+{n:'Faktorial (tanpa kamus)',c:`// Faktorial dengan fungsi\nFUNCTION faktorial(n)\n  hasil <- 1\n  FOR i FROM 1 TO n\n    hasil <- hasil * i\n  END FOR\n  RETURN hasil\nEND FUNCTION\n\nPRINT "Faktorial 5 =", faktorial(5)\n`,i:''},
+{n:'Nilai ujian (INPUT + IF)',c:`PRINT "Masukkan nilai:"\nINPUT nilai\n\nIF nilai >= 75 THEN\n  PRINT "Lulus"\nELSE IF nilai >= 60 THEN\n  PRINT "Remedial"\nELSE\n  PRINT "Tidak lulus"\nEND IF\n`,i:'80'},
+{n:'Rata-rata list',c:`angka <- [4, 8, 15, 16]\ntotal <- 0\n\nFOR EACH x IN angka\n  total <- total + x\nEND FOR\n\nPRINT "Total:", total\nPRINT "Rata-rata:", total / LENGTH(angka)\n`,i:''},
+{n:'FizzBuzz (WHILE)',c:`i <- 1\nWHILE i <= 15 DO\n  IF i MOD 15 = 0 THEN\n    PRINT "FizzBuzz"\n  ELSE IF i MOD 3 = 0 THEN\n    PRINT "Fizz"\n  ELSE IF i MOD 5 = 0 THEN\n    PRINT "Buzz"\n  ELSE\n    PRINT i\n  END IF\n  i <- i + 1\nEND WHILE\n`,i:''},
+{n:'Contoh error (coba jalankan)',c:`total <- 10\nPRINT "Total: " + total\n`,i:''}];
+const src=$('src'),gut=$('gut'),term=$('term'),pyo=$('pyo'),goo=$('goo'),inp=$('inp'),sel=$('sel');
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+EX.forEach((x,i)=>sel.add(new Option(x.n,i)));
+function upd(){const s=src.value;gut.innerHTML=s.split('\n').map((_,i)=>`<div>${i+1}</div>`).join('');
+ try{const a=parse(s);pyo.textContent=pyGen(a);goo.textContent=goGen(a)}
+ catch(e){if(!(e instanceof Er))throw e;const m=`SyntaxError (baris ${e.ln}): ${e.message}`;pyo.textContent='# '+m;goo.textContent='// '+m}}
+function run(){const s=src.value,lines=s.split('\n');let h='<span class="d">$ jalankan program.psc</span>\n',code=0,eln=0;
+ const show=e=>{code=1;eln=e.ln;const sy=e.kind=='SyntaxError';h+=`<span class="er">${sy?`  File "program.psc", baris ${e.ln}\n    ${esc((lines[e.ln-1]||'').trim())}`:`Traceback (panggilan terakhir):\n  baris ${e.ln}: ${esc((lines[e.ln-1]||'').trim())}`}\n${e.kind}: ${esc(e.message)}</span>\n`};
+ try{const r=interp(parse(s),inp.value);h+=esc(r.out);if(r.err)show(r.err)}
+ catch(e){if(e instanceof Er)show(e);else{code=1;h+=`<span class="er">InternalError: ${esc(String(e))}</span>\n`}}
+ term.innerHTML=h+`<span class="d">[proses selesai dengan kode ${code}]</span>`;
+ tab('term');upd();if(eln&&gut.children[eln-1])gut.children[eln-1].classList.add('e')}
+function tab(p){document.querySelectorAll('.tabs [data-p]').forEach(b=>b.setAttribute('aria-selected',b.dataset.p==p));['term','pyo','goo'].forEach(x=>$(x).hidden=x!=p)}
+document.querySelectorAll('.tabs [data-p]').forEach(b=>b.onclick=()=>tab(b.dataset.p));
+$('cp').onclick=async()=>{const p=[term,pyo,goo].find(x=>!x.hidden);try{await navigator.clipboard.writeText(p.innerText);$('cp').textContent='Tersalin'}catch(e){$('cp').textContent='Gagal, blok manual'}setTimeout(()=>$('cp').textContent='Salin',1500)};
+$('run').onclick=run;
+sel.onchange=()=>{const x=EX[sel.value];src.value=x.c;inp.value=x.i;upd();run()};
+src.oninput=upd;src.onscroll=()=>gut.scrollTop=src.scrollTop;
+src.onkeydown=e=>{if(e.key=='Tab'){e.preventDefault();document.execCommand('insertText',false,'  ')}else if(e.key=='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();run()}};
+sel.onchange();
+</script></body></html>
